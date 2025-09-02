@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../home/Home";
 import RegisterForm from "../register/RegisterForm";
+import LoginForm from "../login/Login";
 
 function AppRouter() {
   return (
@@ -11,6 +12,7 @@ function AppRouter() {
 
         <Route path="/register" element={<RegisterForm />} />
 
+        <Route path="/Login" element= {<LoginForm />} />
       </Routes>
     </BrowserRouter>
   );
