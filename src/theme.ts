@@ -2,6 +2,13 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Nunito', // Reemplaza con el nombre de tu fuente
+      'Roboto',
+      'sans-serif',
+    ].join(','),
+  },
   palette: {
   primary: {
     main: "#41A3DC", // Azul
