@@ -12,7 +12,8 @@ function AppRouter() {
 
         <Route path="/register" element={<RegisterForm />} />
 
-        <Route path="/Login" element= {<LoginForm />} />
+        <Route path="/login" element= {<LoginForm />} />
+        
       </Routes>
     </BrowserRouter>
   );
