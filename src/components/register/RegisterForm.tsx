@@ -50,7 +50,6 @@ export default function RegisterForm() {
         height: "100vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         justifyContent: "center",
         bgcolor: "background.default",
         px: 3,
@@ -77,6 +76,7 @@ export default function RegisterForm() {
           maxWidth: 400,
           display: "flex",
           flexDirection: "column",
+          justifyContent: "flex-start",
           gap: 2,
         }}
       >
