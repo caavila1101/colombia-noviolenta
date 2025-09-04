@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -9,7 +10,7 @@ import {
   IconButton,
   InputAdornment,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function LoginForm() {
@@ -19,7 +20,9 @@ export default function LoginForm() {
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -29,10 +32,31 @@ export default function LoginForm() {
       return;
     }
 
-    // Aquí luego puedes validar con backend
-    setSuccess("Inicio de sesión exitoso");
-    setName("");
-    setPassword("");
+    try {
+      const res = await axios.post("http://localhost:4000/auth/login", {
+        nombre_usuario: name,
+        password: password,
+      });
+
+
+      if (res.data.usuario) {
+        setSuccess(res.data.message || "Inicio de sesión exitoso ✅");
+
+        // Guardar usuario en localStorage si lo necesitas
+        localStorage.setItem("usuario", JSON.stringify(res.data.usuario));
+
+        // Redirigir al Home
+        navigate("/");
+      } else {
+        setError(res.data.message || "Credenciales inválidas ❌");
+      }
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || "Error en el servidor");
+      } else {
+        setError("Error inesperado");
+      }
+    }
   };
 
   return (
