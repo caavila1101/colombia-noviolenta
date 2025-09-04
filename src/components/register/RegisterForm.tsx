@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -9,7 +10,7 @@ import {
   IconButton,
   InputAdornment,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function RegisterForm() {
@@ -21,7 +22,9 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -36,11 +39,36 @@ export default function RegisterForm() {
       return;
     }
 
-    setSuccess("Usuario registrado con éxito");
-    setName("");
-    setPassword("");
-    setRepeatPassword("");
-  };
+ try {
+  const res = await axios.post(
+    "http://localhost:4000/register",
+    {
+      nombre_usuario: name.trim(),
+      password: password,
+    },
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+
+  if (res.data.usuario) {
+    setSuccess(res.data.message || "Usuario registrado con éxito");
+
+    setTimeout(() => {
+      navigate("/home");
+    }, 1000);
+  }
+} catch (err: unknown) {
+  if (axios.isAxiosError(err)) {
+  console.error("❌ Error desde backend:", err.response?.data);
+  setError(err.response?.data?.message || "Error inesperado");
+} else {
+  console.error("❌ Error desconocido:", err);
+  setError("Error inesperado");
+}
+
+}
+}
 
   return (
     <Box
@@ -76,7 +104,6 @@ export default function RegisterForm() {
           maxWidth: 400,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-start",
           gap: 2,
         }}
       >
@@ -127,6 +154,7 @@ export default function RegisterForm() {
                 </IconButton>
               </InputAdornment>
             ),
+            
           }}
         />
 
