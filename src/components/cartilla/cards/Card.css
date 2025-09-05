@@ -1,0 +1,21 @@
+.benefit-card {
+  width: 371px !important;
+  min-height: 285px !important;
+  max-width: 100%;  
+}
+
+
+/* Tablets */
+@media (max-width: 992px) {
+    .benefit-card {
+        width: 266px !important;
+        min-height: 244px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .benefit-card {
+        width: 263px !important;
+        min-height: 244px !important;
+    }
+}
