@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../home/Home";
 import Cartilla from "../cartilla/Cartilla";
 import Layout from "../Layout";
+import RegisterForm from "../register/RegisterForm";
+import LoginForm from "../login/Login";
 
 function AppRouter() {
   return (
@@ -14,6 +16,13 @@ function AppRouter() {
 
         {/* Ruta login sin Navbar 
         <Route path="/login" element={<Login />} />*/}
+
+        <Route path="/" element={<Home />} />
+
+        <Route path="/register" element={<RegisterForm />} />
+
+        <Route path="/login" element= {<LoginForm />} />
+        
       </Routes>
     </BrowserRouter>
   );
